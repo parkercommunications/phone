@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# vim: ft=ruby
+
+
+
+Dir["legacy/*.htm"].each do |legacy_page|
+  legacy_content = File.read(legacy_page)
+  body = false
+  page_content = ""
+  legacy_content.each_line do |line|
+    if body
+      page_content << line
+    else
+      if line =~ /<h1/
+        body = true
+        page_content << line
+      end rescue puts line
+    end
+  end
+
+  page_filename = "pages/#{File.basename legacy_page}l"
+  if File.exists?(page_filename)
+    puts "File #{page_filename} exists, run again with --force to overwrite"
+  else
+    File.write page_filename, page_content
+  end
+end
+

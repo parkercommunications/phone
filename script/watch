@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# vim: ft=ruby
+
+def usage
+  puts <<-USAGE
+The rerun gem is required for this script to run.
+Install it with:
+    gem install rerun
+  USAGE
+end
+
+script_dir = File.expand_path "..", __FILE__
+
+exec "rerun -p'{layout.html.erb,pages/*.html}' #{File.join script_dir, "compile"}"
